@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{Component} from "react";
+import {Switch, Route,Link,BrowserRouter as Router} from "react-router-dom";
+import AddProduct from "./components/AddProduct";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Cart from "./components/Cart";
+import Login from "./components/Login";
+import ProductList from "./components/ProductList";
+
+import Context from "./Context";
+
+
+export default class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      user: null,
+      cart: {},
+      products:[]
+    }
+    this.routerRef = React.createRef();
+  }
+
+  render(){
+    return (
+      <Context.Provider
+        value={{
+          ...this.state,
+          removeFromCart : this.removeFromCart,
+          addToCart: this.addToCart,
+          login: this.login,
+          addProduct: this.addProduct,
+          clearCart: this.clearCart,
+          checkout: this.checkout
+        }}
+      >
+        <Router ref = {this.routerRef}>
+          <div className="App">
+            <nav
+              className
+            ></nav>
+          </div>
+        </Router>
+      </Context.Provider>
+    )
+  }
 }
-
-export default App;
